@@ -1,0 +1,22 @@
+{
+  "presets": [
+    "es2015",
+    "stage-1"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ],
+      "presets": [
+        "es2015",
+        "stage-0"
+      ]
+    },
+    "production": {
+      "plugins": [
+        "transform-remove-console"
+      ]
+    }
+  }
+}
