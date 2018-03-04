@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
+import Sequelize from 'sequelize';
 
 import database from '../models';
+
+const Op = Sequelize.Op;
 
 const { User } = database;
 
@@ -25,31 +28,35 @@ const Validator = {
           'Invalid password supplied, minimum of 5 characters'
       }))
     }
+    username = username.toLowerCase();
 
-    const user = await User.findOne({
-      $or: [{ username },
-      { email }]
+    const user = await User.find({
+      where: {
+        [Op.or]: [{ email },
+        { username }]
+      }
     })
 
     if (user) {
-
       if (user.dataValues.email === email) {
         ctx.throw(409, JSON.stringify({
           message: 'Email already exist'
         }))
       }
 
-      else if (user.dataValues.username === username) {
-        ctx.throw(409, JSON.stringify({
-          message: 'Username already exist'
-        }))
+      else {
+        if (user.dataValues.username === username) {
+          ctx.throw(409, JSON.stringify({
+            message: 'Username already exist'
+          }))
+        }
       }
-    } else {
+    }
+    else {
       const _password = bcrypt.hashSync(password, 10);
 
-      const _username = username.toLowerCase();
       ctx.request.userInput = {
-        username: _username,
+        username,
         email,
         password: _password
       }

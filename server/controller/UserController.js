@@ -40,7 +40,6 @@ const UserController = {
         message: 'Signup successful'
       }
     } catch (err) {
-      console.log(err);
       ctx.throw(500, err)
     }
   },

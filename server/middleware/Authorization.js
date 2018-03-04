@@ -49,7 +49,7 @@ const Authorization = {
       ctx.request.decoded = decodedToken;
       await next();
     } catch (error) {
-      console.log(error)
+      ctx.throw(500, err)
     }
   },
 
