@@ -8,6 +8,7 @@ import { SET_API_STATUS, SET_CURRENT_USER, UNAUTH_USER } from './ActionTypes';
 
 const userApiUrl = '/api/v1/users/';
 
+
 /**
  * @description -  Sets API status
  *
@@ -49,18 +50,19 @@ export function loginAction(userData) {
   setApiCallProgress(true);
   return dispatch =>
     axios
-      .post(`${userApiUrl}/signin`, userData)
+      .post(`${userApiUrl}signin`, userData)
       .then((response) => {
+        toastr.success('Login successful')
         setApiCallProgress(true);
         const { token } = response.data;
         localStorage.setItem('token', token);
         setAuthorizationToken(token);
         const decoded = jwt.decode(response.data.token);
         dispatch(setCurrentUser(decoded.currentUser));
-        Materialize.toast(response.data.message, '3000');
+        return true;
       })
       .catch((error) => {
-        Materialize.toast(error.response.data.message, '2000', 'red');
+        toastr.error(error.response.data.message);
       });
 }
 
@@ -75,17 +77,18 @@ export function loginAction(userData) {
 export function registerAction(userData) {
   return dispatch =>
     axios
-      .post(`${userApiUrl}/signup`, userData)
+      .post(`${userApiUrl}signup`, userData)
       .then((response) => {
-        setApiCallProgress(true);
+        toastr.success('Registeration successful')
         const { token } = response.data;
         localStorage.setItem('token', token);
         setAuthorizationToken(token);
         const decoded = jwt.decode(response.data.token);
         dispatch(setCurrentUser(decoded.currentUser));
+        return true;
       })
       .catch((error) => {
-        console.log(error);
+        toastr.error(error.response.data.message);
       });
 }
 
@@ -102,5 +105,5 @@ export const logoutAction = () => (dispatch) => {
     user: {},
     authenticated: false
   });
-  Materialize.toast('Sucessfully logged out...', 1000, 'red');
+  toastr.error('Sucessfully logged out...');
 };

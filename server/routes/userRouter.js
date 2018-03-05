@@ -16,11 +16,6 @@ const apiPrefix = '/api/v1/users';
 userRouter.post(`${apiPrefix}/signup`, checkInput, create)
 userRouter.post(`${apiPrefix}/signin`, login)
 
-userRouter.get('/', (ctx) => {
-  ctx.response.body = {
-    message: 'Welcome to the API'
-  }
-})
 
 
 

@@ -1,20 +1,53 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { loginAction } from '../../actions/UserActions';
 
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: '',
+      password: ''
+    }
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.loginAction(this.state)
+      .then((response) => {
+        if (response) {
+          this.props.history.push('/chat');
+        }
+      });
+  }
+
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   render() {
     return (
       <div>
-        <form id="login-form" style={{ display: 'block' }}>
+        <form
+          onSubmit={this.onSubmit}
+          id="login-form" style={{ display: 'block' }}>
           <div className="form-group">
-            <input type="text" name="username" id="username"
-              className="form-control" placeholder="Username" />
+            <input type="text" onChange={this.onChange} name="username" id="username"
+              className="form-control" placeholder="Username" required />
           </div>
           <div className="form-group">
-            <input type="password" name="password" id="password"
-              className="form-control" placeholder="Password" />
+            <input onChange={this.onChange}
+              type="password" name="password" id="password"
+              className="form-control" placeholder="Password" required />
           </div>
           <div className="form-group text-center">
             <input type="checkbox" name="remember"
@@ -46,4 +79,5 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { loginAction })(Login);
+export default withRouter(connect(null, { loginAction })(Login));
+

@@ -58,10 +58,10 @@ const UserController = {
           message: 'Invalid credentials'
         }))
       } else {
-        username = username.toLowerCase();
+        const _username = username.toLowerCase();
         const user = await User.findOne({
           where: {
-            username
+            username: _username
           }
         })
 

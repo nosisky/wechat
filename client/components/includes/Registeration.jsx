@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { registerAction } from '../../actions/UserActions';
 
 
@@ -20,9 +22,11 @@ class Registeration extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.props.registerAction(this.state)
-      .then(() => {
-        toastr.success('Registeration successful')
-      })
+      .then((response) => {
+        if (response) {
+          this.props.history.push('/chat');
+        }
+      });
   }
 
   onChange(event) {
@@ -87,4 +91,4 @@ class Registeration extends Component {
   }
 }
 
-export default connect(null, { registerAction })(Registeration);
+export default withRouter(connect(null, { registerAction })(Registeration));

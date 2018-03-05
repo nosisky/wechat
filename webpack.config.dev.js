@@ -11,16 +11,12 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.join(__dirname, './client/dist/'),
-    publicPath: '/client/index.jsx',
+    publicPath: '/client',
     filename: 'bundle.js'
   },
   plugins: [
     new cleanWebpackPlugin(['client/dist']),
-    new htmlWebpackPlugin({
-      title: 'WeChat',
-      template: 'client/index.html',
-      inject: 'body'
-    }),
+
     new webpack.EnvironmentPlugin(['secret']),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
