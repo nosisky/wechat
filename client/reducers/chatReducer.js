@@ -1,5 +1,5 @@
 import {
-  GET_CHAT_HISTORY
+  GET_CHAT_HISTORY, NEW_MESSAGE
 } from '../actions/ActionTypes';
 
 const initialState = {
@@ -18,10 +18,18 @@ const initialState = {
 function chatReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CHAT_HISTORY:
-      console.log(action, 'from reducer.....')
       return {
         ...state,
         messages: action.message
+      };
+
+    case NEW_MESSAGE:
+      let allMessage = state.messages;
+      let { message } = action;
+
+      return {
+        ...state,
+        messages: allMessage.concat([message])
       };
     default:
       return state;

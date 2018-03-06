@@ -43,13 +43,13 @@ const ChatController = {
     const senderId = ctx.request.decoded.currentUser.id;
 
     const identifier = `${Math.max(Number(receiverId), Number(senderId))}:${Math.min(Number(receiverId), Number(senderId))}`
-    console.log(identifier, '======>')
     try {
       ctx.body = await Message
         .findAll({
           where: {
             identifier
-          }
+          },
+          order: ['updatedAt']
         })
     } catch (error) {
       ctx.throw(500, error)

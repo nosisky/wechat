@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import OnlineLists from "../includes/OnlineLists";
-import { getChatHistory } from '../../actions/ChatActions';
+import { getChatHistory, submitChat } from '../../actions/ChatActions';
 
 const socket = io.connect('http://localhost:3000');
 
@@ -13,11 +13,15 @@ class ChatPage extends Component {
 
     this.state = {
       onlineUsers: {},
-      onChatPage: false
+      onChatPage: false,
+      message: '',
+      receiverId: ''
     }
 
     this.renderOnlineUsers = this.renderOnlineUsers.bind(this);
     this.renderMessage = this.renderMessage.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmitChat = this.onSubmitChat.bind(this);
   }
 
   componentDidMount() {
@@ -42,7 +46,8 @@ class ChatPage extends Component {
         .then((response) => {
           if (response) {
             this.setState({
-              onChatPage: true
+              onChatPage: true,
+              receiverId: newReceiverId
             })
           }
         })
@@ -55,7 +60,7 @@ class ChatPage extends Component {
     const userId = this.props.user.id;
 
     return allMessage.map((message) => {
-      if (userId !== message.receiverId) {
+      if (userId === message.receiverId) {
         return (
           <div key={message.id} className="row message-body">
             <div className="col-sm-12 message-main-receiver">
@@ -88,6 +93,18 @@ class ChatPage extends Component {
       }
     })
   }
+
+  onSubmitChat(event) {
+    event.preventDefault();
+    this.props.submitChat(this.state);
+  }
+
+  onChange(event) {
+    this.setState({
+      message: event.target.value
+    })
+  }
+
   renderOnlineUsers() {
     let users = Object.keys(this.state.onlineUsers);
 
@@ -183,8 +200,10 @@ class ChatPage extends Component {
                   <i className="fa fa-smile-o fa-2x" />
                 </div>
                 <div className="col-sm-9 col-xs-9 reply-main">
-                  <form name="">
-                    <textarea className="form-control" id="comment" />
+                  <form name="chat-box" onSubmit={this.onSubmitChat}>
+                    <input name="message" onChange={this.onChange}
+                      className="form-control"
+                      id="comment" required />
                   </form>
                 </div>
                 <div className="col-sm-1 col-xs-1 reply-recording">
@@ -211,4 +230,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getChatHistory })(ChatPage);
+export default connect(mapStateToProps, { getChatHistory, submitChat })(ChatPage);
