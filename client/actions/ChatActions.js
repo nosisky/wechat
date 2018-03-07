@@ -32,12 +32,12 @@ export function setApiCallProgress(status) {
  * @returns { Object } - Dispatches user object to the store
  */
 export function getChatHistory(receiverId) {
-  setApiCallProgress(true);
-  return dispatch =>
+  return dispatch => {
+    dispatch(setApiCallProgress(true));
     axios
       .get(`${userApiUrl}/${receiverId}`)
       .then((response) => {
-        dispatch(setApiCallProgress(true));
+        dispatch(setApiCallProgress(false));
         dispatch({
           type: GET_CHAT_HISTORY,
           message: response.data
@@ -45,21 +45,19 @@ export function getChatHistory(receiverId) {
         return true;
       })
       .catch((error) => {
+        dispatch(setApiCallProgress(false));
         toastr.error(error.response.data.message);
       });
+  }
 }
 
 export function submitChat(messageData) {
   return dispatch => axios.post(`${userApiUrl}`, messageData)
     .then((response) => {
       socket.emit('new message', response.data.newMessage)
-        ("#conversation").each(function () {
-          var scrollHeight = Math.max(this.scrollHeight, this.clientHeight);
-          this.scrollTop = scrollHeight - this.clientHeight;
-        });
-
+      document.getElementById('message_form').reset();
     })
     .catch(() => {
-
+      toastr.error(error.response.data.message);
     })
 }

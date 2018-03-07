@@ -22,11 +22,9 @@ const socketEvents = (io) => {
 
       let usersKey = Object.keys(onlineUsers)
       usersKey.forEach((u) => {
-        console.log(socketId, '-----', onlineUsers[u].socketId, '---->', onlineUsers)
         if (onlineUsers[u].socketId === socketId) {
           delete onlineUsers[u];
           io.socket.emit('new online', onlineUsers);
-          console.log(socketId)
         }
       })
 

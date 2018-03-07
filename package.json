@@ -40,6 +40,7 @@
     "pg": "^7.4.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-loader": "^2.4.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
