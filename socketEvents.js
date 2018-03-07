@@ -41,4 +41,4 @@ const socketEvents = (io) => {
 };
 
 
-export default socketEvents;
+module.exports = socketEvents;

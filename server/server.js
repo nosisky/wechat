@@ -8,12 +8,13 @@ import webpack from 'webpack';
 import serve from 'koa-static';
 import path from 'path';
 import IO from 'koa-socket';
+import 'babel-core/register';
 
-import webpackConfigDev from './webpack.config.dev';
-import userRouter from './server/routes/userRouter';
-import chatRouter from './server/routes/chatRouter';
-import renderFile from './renderFile';
-import socketEvent from './socketEvents';
+import webpackConfigDev from '../webpack.config.dev';
+import userRouter from './routes/userRouter';
+import chatRouter from './routes/chatRouter';
+import renderFile from '../renderFile';
+import socketEvent from '../socketEvents';
 
 
 const server = new Koa();
@@ -27,8 +28,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // serve files in public folder (css, js etc)
-server.use(serve('./client/'));
-server.use(serve('./client/public/'));
+server.use(serve(__dirname + '/../client/'));
+server.use(serve(__dirname + '/../client/public/'));
 
 
 server.use(bodyParser());
@@ -44,7 +45,7 @@ server.use(chatRouter.routes())
 
 router
   .get('*', async (ctx) => {
-    ctx.body = await renderFile(__dirname + '/client/index.html')
+    ctx.body = await renderFile(__dirname + '/../client/index.html')
   })
 server.use(router.routes());
 

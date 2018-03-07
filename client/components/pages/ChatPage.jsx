@@ -250,7 +250,6 @@ class ChatPage extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.auth.apiStatus)
   return {
     user: state.auth.user,
     isAuthenticated: state.auth.authenticated,

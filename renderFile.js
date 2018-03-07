@@ -12,4 +12,4 @@ const renderFile = (src) => {
     });
   });
 }
-export default renderFile;
+module.exports = renderFile;
