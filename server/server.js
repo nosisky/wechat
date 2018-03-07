@@ -21,7 +21,7 @@ const server = new Koa();
 const router = new Router();
 const io = new IO();
 
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV === 'development') {
   server.use(webpackMiddleware(webpack(webpackConfigDev)));
