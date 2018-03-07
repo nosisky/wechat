@@ -8,7 +8,7 @@ import { setCurrentUser, logoutAction } from './actions/UserActions';
 
 import App from './components/App';
 import configureStore from './store/configureStore';
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('/');
 
 
 const store = configureStore();
