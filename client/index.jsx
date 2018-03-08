@@ -20,7 +20,11 @@ socket.on('message received', (data) => {
   const userData = jwt.decode(token).currentUser;
 
   if (data.receiverId === userData.id) {
+
+    $("#online-indicator").hide();
     $("#new-indicator").show().delay(5000).fadeOut();
+    setTimeout(function () { $("#online-indicator").show(); }, 6000);
+
   }
   store.dispatch({
     type: NEW_MESSAGE,
