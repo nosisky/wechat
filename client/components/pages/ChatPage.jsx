@@ -82,7 +82,8 @@ class ChatPage extends Component {
     const userId = this.props.user.id;
 
     return allMessage.map((message) => {
-      if (userId === message.receiverId) {
+      if (userId === message.receiverId
+        && message.senderId === Number(receiverId)) {
         return (
           <div key={message.id} className="row message-body">
             <div className="col-sm-12 message-main-receiver">
