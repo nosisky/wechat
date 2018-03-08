@@ -48,6 +48,7 @@ class ChatPage extends Component {
   onClick() {
     this.props.logoutAction()
       .then((response) => {
+        socket.disconnect();
         this.props.history.push('/')
       })
   }
