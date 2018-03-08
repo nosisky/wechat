@@ -52,10 +52,10 @@ export function getChatHistory(receiverId) {
 }
 
 export function submitChat(messageData) {
+  document.getElementById('message_form').reset();
   return dispatch => axios.post(`${userApiUrl}`, messageData)
     .then((response) => {
       socket.emit('new message', response.data.newMessage)
-      document.getElementById('message_form').reset();
     })
     .catch(() => {
       toastr.error(error.response.data.message);
