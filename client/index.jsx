@@ -17,6 +17,11 @@ const token = localStorage.getItem('token');
 
 
 socket.on('message received', (data) => {
+  const userData = jwt.decode(token).currentUser;
+
+  if (data.receiverId === userData.id) {
+    $("#new-indicator").show().delay(5000).fadeOut();
+  }
   store.dispatch({
     type: NEW_MESSAGE,
     message: data

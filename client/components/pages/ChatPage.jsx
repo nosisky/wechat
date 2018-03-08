@@ -107,9 +107,6 @@ class ChatPage extends Component {
                   <div className="message-text">
                     {message.message}
                   </div>
-                  <span className="message-time pull-right">
-                    Sun
-              </span>
                 </div>
               </div>
             </div>
