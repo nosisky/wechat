@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import OnlineLists from "../includes/OnlineLists";
 import { getChatHistory, submitChat } from '../../actions/ChatActions';
 
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('/');
 
 
 class ChatPage extends Component {

@@ -6,7 +6,7 @@ import { GET_CHAT_HISTORY, SET_API_STATUS, NEW_MESSAGE } from './ActionTypes';
 
 const userApiUrl = '/api/v1/chat';
 
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('/');
 
 /**
  * @description -  Sets API status
