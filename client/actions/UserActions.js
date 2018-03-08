@@ -106,4 +106,8 @@ export const logoutAction = () => (dispatch) => {
     authenticated: false
   });
   toastr.error('Sucessfully logged out...');
+
+  return new Promise((resolve) => {
+    resolve(true)
+  });
 };

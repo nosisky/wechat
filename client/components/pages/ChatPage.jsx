@@ -4,7 +4,9 @@ import Loader from 'react-loader';
 import { Link } from 'react-router-dom'
 
 import OnlineLists from "../includes/OnlineLists";
+import Footer from "../includes/Footer";
 import { getChatHistory, submitChat } from '../../actions/ChatActions';
+import { logoutAction } from '../../actions/UserActions';
 
 const socket = io.connect('/');
 
@@ -26,6 +28,7 @@ class ChatPage extends Component {
     this.renderMessage = this.renderMessage.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmitChat = this.onSubmitChat.bind(this);
+    this.onClick = this.onClick.bind(this);
 
   }
 
@@ -40,6 +43,13 @@ class ChatPage extends Component {
         onlineUsers: data
       })
     })
+  }
+
+  onClick() {
+    this.props.logoutAction()
+      .then((response) => {
+        this.props.history.push('/')
+      })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -179,15 +189,12 @@ class ChatPage extends Component {
                   <div className="row heading">
                     <div className="col-sm-3 col-xs-3 heading-avatar">
                       <div className="heading-avatar-icon">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+                        <img src="/img/whatsapp.png" />
                       </div>
-                    </div>
-                    <div className="col-sm-1 col-xs-1  heading-dot  pull-right">
-                      <i className="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true" />
                     </div>
                     <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
                       <Link to="/"> <i
-                        className="fa fa-comments fa-2x  pull-right"
+                        className="fa fa-home fa-2x  pull-right"
                         aria-hidden="true" /></Link>
                     </div>
                   </div>
@@ -202,19 +209,22 @@ class ChatPage extends Component {
                       <img src="https://bootdey.com/img/Content/avatar/avatar6.png" />
                     </div>
                   </div>
+
                   <div className="col-sm-8 col-xs-7 heading-name">
                     <a className="heading-name-meta">{this.props.user.username}
                     </a>
                     <span className="heading-online">Online</span>
                   </div>
                   <div className="col-sm-1 col-xs-1  heading-dot pull-right">
-                    <i className="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true" />
+                    <i onClick={this.onClick}
+                      className="fa fa-times-circle fa-2x  pull-right" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="row message" id="conversation">
                   {!this.state.onChatPage &&
                     <h1 style={{ textAlign: 'center' }}>
-                      Welcome to WeChat {this.props.user.username.toUpperCase()}, <br />
+                      Welcome to WeChat {this.props.username &&
+                        this.props.user.username.toUpperCase()}, <br />
                       select an online user from the left menu to begin a chat.</h1>
                   }
                   {this.state.onChatPage && this.renderMessage()}
@@ -228,6 +238,7 @@ class ChatPage extends Component {
                       name="chat-box" onSubmit={this.onSubmitChat}>
                       <input name="message" onChange={this.onChange}
                         className="form-control"
+                        placeholder="Type your message..."
                         id="comment" required />
                     </form>
                   </div>
@@ -242,6 +253,7 @@ class ChatPage extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </Loader>
     );
   }
@@ -256,4 +268,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getChatHistory, submitChat })(ChatPage);
+export default connect(mapStateToProps, {
+  logoutAction,
+  getChatHistory, submitChat
+})(ChatPage);
