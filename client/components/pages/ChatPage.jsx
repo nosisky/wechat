@@ -214,34 +214,33 @@ class ChatPage extends Component {
       }
       `
     return (
-      <div>
-        <style>{main}</style>
-        <div className="container app">
-          <div className="row app-one">
-            <div className="col-sm-4 side hidden-xs">
-              <div className="side-one">
-                <div className="row heading">
-                  <div className="col-sm-3 col-xs-3 heading-avatar">
-                    <div className="heading-avatar-icon">
-                      <img src="/img/whatsapp.png" />
+      <Loader
+        width={20}
+        radius={50}
+        loaded={!this.props.apiStatus}>
+        <div>
+          <style>{main}</style>
+          <div className="container app">
+            <div className="row app-one">
+              <div className="col-sm-4 side hidden-xs">
+                <div className="side-one">
+                  <div className="row heading">
+                    <div className="col-sm-3 col-xs-3 heading-avatar">
+                      <div className="heading-avatar-icon">
+                        <img src="/img/whatsapp.png" />
+                      </div>
+                    </div>
+                    <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
+                      <Link to="/"> <i
+                        className="fa fa-home fa-2x  pull-right"
+                        aria-hidden="true" /></Link>
                     </div>
                   </div>
-                  <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
-                    <Link to="/"> <i
-                      className="fa fa-home fa-2x  pull-right"
-                      aria-hidden="true" /></Link>
-                  </div>
+
+                  {this.renderOnlineUsers()}
                 </div>
-
-                {this.renderOnlineUsers()}
               </div>
-            </div>
-
-            <div className="col-sm-8 conversation">
-              <Loader
-                width={20}
-                radius={50}
-                loaded={!this.props.apiStatus}>
+              <div className="col-sm-8 conversation">
                 <div className="row heading">
                   <div className="col-sm-2 col-md-1 col-xs-3 heading-avatar">
                     <div className="heading-avatar-icon">
@@ -294,14 +293,15 @@ class ChatPage extends Component {
                       <i className="fa fa-send fa-2x" aria-hidden="true" />
                     </div>
                   </div>}
-              </Loader>
+
+              </div>
+
 
             </div>
-
-
           </div>
         </div>
-      </div>
+      </Loader>
+
     );
   }
 }
