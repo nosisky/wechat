@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const OnlineLists = ({ username, id, userId }) => {
+const OnlineLists = ({ username, id, userId, onlineId }) => {
   return (
     <ul className="list-group">
       <li className="list-group-item">
-        {userId !== id && <Link to={`/chat/${id}`}>{username}
+        {userId !== id && <Link to={`/chat/${id}`}
+        >{username}
           <img id="new-indicator"
             height="20px"
             width="20px" style={{ float: 'right', display: 'none' }}

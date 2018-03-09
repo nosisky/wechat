@@ -14,4 +14,30 @@ $(function () {
     $(this).addClass('active');
     e.preventDefault();
   });
+
 });
+
+
+//Speech to text begins
+try {
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var recognition = new SpeechRecognition();
+}
+catch (e) {
+  console.error(e);
+}
+
+recognition.onresult = function testVoice(event) {
+
+  // event is a SpeechRecognitionEvent object.
+  // It holds all the lines we have captured so far. 
+  // We only need the current one.
+  var current = event.resultIndex;
+
+  // Get a transcript of what was said.
+  var transcript = event.results[current][0].transcript;
+
+  const previousText = $("#main-text").val();
+
+  $("#main-text").val(`${previousText} ${transcript}`);
+};

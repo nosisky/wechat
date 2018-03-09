@@ -56,8 +56,9 @@ export function submitChat(messageData) {
   return dispatch => axios.post(`${userApiUrl}`, messageData)
     .then((response) => {
       socket.emit('new message', response.data.newMessage)
+      return true;
     })
-    .catch(() => {
+    .catch((error) => {
       toastr.error(error.response.data.message);
     })
 }

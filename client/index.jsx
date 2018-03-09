@@ -16,6 +16,7 @@ const store = configureStore();
 const token = localStorage.getItem('token');
 
 
+
 socket.on('message received', (data) => {
   const userData = jwt.decode(token).currentUser;
 

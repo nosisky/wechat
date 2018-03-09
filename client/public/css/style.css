@@ -386,6 +386,16 @@ border-color: #1CA347;
   height: calc(100% - 160px);
 }
 
+#welcome-message {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-weight: 400;
+  color: #6e6c6c;
+  line-height: 2em;
+  font-style: normal;
+}
+
 /*Conversation*/
 
 .conversation {
