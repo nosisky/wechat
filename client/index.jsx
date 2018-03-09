@@ -18,19 +18,21 @@ const token = localStorage.getItem('token');
 
 
 socket.on('message received', (data) => {
-  const userData = jwt.decode(token).currentUser;
+  if (token) {
+    const userData = jwt.decode(token).currentUser;
 
-  if (data.receiverId === userData.id) {
+    if (data.receiverId === userData.id) {
 
-    $("#online-indicator").hide();
-    $("#new-indicator").show().delay(5000).fadeOut();
-    setTimeout(function () { $("#online-indicator").show(); }, 6000);
+      $("#online-indicator").hide();
+      $("#new-indicator").show().delay(5000).fadeOut();
+      setTimeout(function () { $("#online-indicator").show(); }, 6000);
 
+    }
+    store.dispatch({
+      type: NEW_MESSAGE,
+      message: data
+    })
   }
-  store.dispatch({
-    type: NEW_MESSAGE,
-    message: data
-  })
 })
 
 

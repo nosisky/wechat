@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { Link } from 'react-router-dom'
+import jwt from 'jsonwebtoken';
 
 import OnlineLists from "../includes/OnlineLists";
 import Footer from "../includes/Footer";
@@ -33,11 +34,16 @@ class ChatPage extends Component {
 
   }
 
+
   componentDidMount() {
     if (!this.props.isAuthenticated) {
       this.props.history.push('/');
     }
-    socket.emit('connected user', this.props.user)
+
+    const token = localStorage.getItem('token');
+    const decoded = jwt.decode(token);
+
+    socket.emit('connected user', decoded.currentUser)
 
     socket.on('new online', (data) => {
       this.setState({

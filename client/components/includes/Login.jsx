@@ -41,12 +41,13 @@ class Login extends Component {
           onSubmit={this.onSubmit}
           id="login-form" style={{ display: 'block' }}>
           <div className="form-group">
-            <input type="text" onChange={this.onChange} name="username" id="username"
+            <input type="text" onChange={this.onChange} name="username"
+              id="login-username"
               className="form-control" placeholder="Username" required />
           </div>
           <div className="form-group">
             <input onChange={this.onChange}
-              type="password" name="password" id="password"
+              type="password" name="password" id="login-password"
               className="form-control" placeholder="Password" required />
           </div>
           <div className="form-group text-center">

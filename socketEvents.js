@@ -5,8 +5,6 @@ const socketEvents = (io) => {
 
     // On conversation entry, join broadcast channel
     socket.on('connected user', (data) => {
-
-
       const socketId = socket.id;
       const userId = data.id;
 
